@@ -42,7 +42,19 @@ export const findFavoriteByUserImage = async ({ userId, imageId }) => {
 
 export const findAllFavoriteByUser = async ({ userId }) => {
     try {
-        const favorites = await Favorite.findAll({ where: { fk_user_id: userId, like: true }});
+        const favorites = await Favorite.findAll({ 
+            where: {
+                fk_user_id: userId,
+                like: true
+            },
+            include: [
+                {
+                    model: Image,
+                    as: 'image',
+                    attributes: ['image_id', 'slug', 'description', 'url_raw', 'url_small','width', 'height', 'created_at', 'updated_at']
+                }
+            ]
+        });
         return favorites.length > 0 ? favorites : [];
         
     } catch (error) {

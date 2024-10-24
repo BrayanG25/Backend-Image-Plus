@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { searchImagesByKeywords, likeImage, unlikeImage, getUserFavoriteImages } from '../Controllers/image.controller.js';
-import { authRequired } from '../Middlewares/validateToken.middleware.js';
+import { searchImagesByKeywords, likeImage, unlikeImage, getUserFavoriteImages, likeImages } from '../Controllers/image.controller.js';
+import { authRequired, authRequiredGET } from '../Middlewares/validateToken.middleware.js';
 
 const router = Router();
 
@@ -10,10 +10,13 @@ router.get('/', searchImagesByKeywords);
 // Like an image and register it if not exists
 router.post('/like', authRequired, likeImage);
 
+// Like an image and register it if not exists
+router.post('/likes', authRequired, likeImages);
+
 // Unlike an image
 router.post('/unlike', authRequired, unlikeImage);
 
 // Get favorite images by user ID
-router.get('/user/favorites', authRequired, getUserFavoriteImages);
+router.get('/user/favorites', authRequiredGET, getUserFavoriteImages);
 
 export default router;

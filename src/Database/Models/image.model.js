@@ -1,4 +1,5 @@
 import { DataTypes, Model } from "sequelize";
+import { Favorite } from "./favorite.model.js";
 import sequelize from '../sequelize.js';
 
 export class Image extends Model {};
@@ -56,3 +57,5 @@ Image.init(
         tableName: 'image',
     }
 );
+
+Favorite.belongsTo(Image, { foreignKey: 'fk_image_id', targetKey: 'image_id', as: 'image' });

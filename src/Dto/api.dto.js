@@ -1,4 +1,4 @@
-export const transformData = async (data) => {
+export const createDataApiDTO = (data) => {
     return {
         totalItems: data.total,
         totalPages: data.total_pages,
@@ -21,4 +21,22 @@ export const transformData = async (data) => {
             }
         })),
     };
-}
+};
+
+export const createImageApiDTO = (data) => {
+    return data.map(item => ({
+        id: item.image.image_id,
+        slug: item.image.slug,
+        altDescription: item.image.description,
+        createdAt: item.image.created_at,
+        updatedAt: item.image.updated_at,
+        dimensions: {
+            width: item.image.width,
+            height: item.image.height
+        },
+        urls: {
+            raw: item.image.url_raw,
+            small: item.image.url_small,
+        }
+    }))
+};

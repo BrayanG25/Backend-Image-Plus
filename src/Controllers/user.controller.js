@@ -41,8 +41,9 @@ export const loginUser = async (req, res) => {
 
         // Generate JSON web token
         const token = await generateToken(user);
+        const response = { ...user, access_token: token };
 
-        await sendStandardResponse(res, true, 'Successfully login user', 200, user, {
+        await sendStandardResponse(res, true, 'Successfully login user', 200, response, {
             name: 'access_token',
             value: token,
             options: { 
@@ -91,8 +92,9 @@ export const registerUser = async (req, res) => {
 
         // Generate JSON web token
         const token = await generateToken(user);
+        const response = { ...user, access_token: token };
 
-        return await sendStandardResponse(res, true, 'Operation successful', 200, user, {
+        return await sendStandardResponse(res, true, 'Operation successful', 200, response, {
             name: 'access_token',
             value: token,
             options: { 
