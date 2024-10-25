@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # db:
+  #   image: mysql:8.0
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+  #     MYSQL_DATABASE: ${DB_DATABASE}
+  #     MYSQL_USER: ${DB_USER}
+  #     MYSQL_PASSWORD: ${DB_PASSWORD}
+  #   ports:
+  #     - "3307:3306"
+  #   volumes:
+  #     - dbdata:/var/lib/mysql
+
+  app:
+    build: .
+    ports:
+      - "${PORT}:${PORT}"
+    # depends_on:
+    #   - db
+    environment:
+      DB_HOST: "db"
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_DATABASE}
+      DB_PORT: ${DB_PORT}
+      NODE_ENV: ${NODE_ENV}
+      SALT_ROUNDS: ${SALT_ROUNDS}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      JWT_EXPIRATION: ${JWT_EXPIRATION}
+      JWT_USER_SERVICE: ${JWT_USER_SERVICE}
+      JWT_ROL_SERVICE: ${JWT_ROL_SERVICE}
+      API_BASE_URL_IMAGES: ${API_BASE_URL_IMAGES}
+      API_CLIENT_ID_IMAGES: ${API_CLIENT_ID_IMAGES}
+      
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm start
+
+# volumes:
+#   dbdata:
